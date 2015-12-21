@@ -1,0 +1,195 @@
+Scraping comments of song 28302912
+Scraping lyric of song '28302912'
+Scraping comments of song 26600103
+Scraping lyric of song '26600103'
+Scraping comments of song 65931
+Scraping lyric of song '65931'
+Scraping comments of song 114741
+Scraping lyric of song '114741'
+Scraping comments of song 5264250
+Scraping lyric of song '5264250'
+Scraping comments of song 27902987
+Scraping lyric of song '27902987'
+Scraping comments of song 94656
+Scraping lyric of song '94656'
+Scraping comments of song 306907
+Scraping lyric of song '306907'
+Scraping comments of song 27591711
+Scraping lyric of song '27591711'
+Scraping comments of song 189545
+Scraping lyric of song '189545'
+Scraping comments of song 217495
+Scraping lyric of song '217495'
+Scraping comments of song 365701
+Scraping lyric of song '365701'
+Scraping comments of song 63787
+Scraping lyric of song '63787'
+Scraping comments of song 25643578
+Scraping lyric of song '25643578'
+Scraping comments of song 29723022
+Scraping lyric of song '29723022'
+Scraping comments of song 22840909
+Scraping lyric of song '22840909'
+Scraping comments of song 22841955
+Scraping lyric of song '22841955'
+Scraping comments of song 27955658
+Scraping lyric of song '27955658'
+Scraping comments of song 186010
+Scraping lyric of song '186010'
+Scraping comments of song 233866
+Scraping lyric of song '233866'
+Scraping comments of song 26079021
+Scraping lyric of song '26079021'
+Scraping comments of song 27566765
+Scraping lyric of song '27566765'
+Scraping comments of song 110207
+Scraping lyric of song '110207'
+Scraping comments of song 4875081
+Scraping lyric of song '4875081'
+Scraping comments of song 26600777
+Scraping lyric of song '26600777'
+Scraping comments of song 143181
+Scraping lyric of song '143181'
+Scraping comments of song 25657378
+Scraping lyric of song '25657378'
+Scraping comments of song 343065
+Scraping lyric of song '343065'
+Scraping comments of song 174407
+Scraping lyric of song '174407'
+Scraping comments of song 5247677
+Scraping lyric of song '5247677'
+Scraping comments of song 307525
+Scraping lyric of song '307525'
+Scraping comments of song 307514
+Scraping lyric of song '307514'
+Scraping comments of song 150389
+Scraping lyric of song '150389'
+Scraping comments of song 146664
+Scraping lyric of song '146664'
+Scraping comments of song 191819
+Scraping lyric of song '191819'
+Scraping comments of song 233913
+Scraping lyric of song '233913'
+Scraping comments of song 108242
+Scraping lyric of song '108242'
+Scraping comments of song 84306
+Scraping lyric of song '84306'
+Scraping comments of song 187945
+Scraping lyric of song '187945'
+Scraping comments of song 26902929
+Scraping lyric of song '26902929'
+Scraping comments of song 5260494
+Scraping lyric of song '5260494'
+Scraping comments of song 35288210
+Scraping lyric of song '35288210'
+Scraping comments of song 362998
+Scraping lyric of song '362998'
+Scraping comments of song 165005
+Scraping lyric of song '165005'
+Scraping comments of song 28191910
+Scraping lyric of song '28191910'
+Scraping comments of song 176053
+Scraping lyric of song '176053'
+Scraping comments of song 5269033
+Scraping lyric of song '5269033'
+Scraping comments of song 28181131
+Scraping lyric of song '28181131'
+Scraping comments of song 28952240
+Scraping lyric of song '28952240'
+Scraping comments of song 22840606
+Scraping lyric of song '22840606'
+Scraping comments of song 25949866
+Scraping lyric of song '25949866'
+Scraping comments of song 5399282
+Scraping lyric of song '5399282'
+Song '28302912' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '28302912'
+Trying to update tags of song '28302912'
+Song '26600103' dumps into database
+Song '65931' dumps into database
+Song '114741' dumps into database
+Song '5264250' dumps into database
+Song '27902987' dumps into database
+Song '94656' dumps into database
+Song '306907' dumps into database
+Song '27591711' dumps into database
+Song '189545' dumps into database
+Song '217495' dumps into database
+Song '365701' dumps into database
+Song '63787' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '63787'
+Trying to update tags of song '63787'
+Song '25643578' dumps into database
+Song '29723022' dumps into database
+Song '22840909' dumps into database
+Song '22841955' dumps into database
+Song '27955658' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '27955658'
+Trying to update tags of song '27955658'
+Song '186010' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '186010'
+Trying to update tags of song '186010'
+Song '233866' dumps into database
+Song '26079021' dumps into database
+Song '27566765' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '27566765'
+Trying to update tags of song '27566765'
+Song '110207' dumps into database
+Song '4875081' dumps into database
+Song '26600777' dumps into database
+Song '143181' dumps into database
+Song '25657378' dumps into database
+Song '343065' dumps into database
+Song '174407' dumps into database
+Song '5247677' dumps into database
+Song '307525' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '307525'
+Trying to update tags of song '307525'
+Song '307514' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '307514'
+Trying to update tags of song '307514'
+Song '150389' dumps into database
+Song '146664' dumps into database
+Song '191819' dumps into database
+Song '233913' dumps into database
+Song '108242' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '108242'
+Trying to update tags of song '108242'
+Song '84306' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '84306'
+Trying to update tags of song '84306'
+Song '187945' dumps into database
+Song '26902929' dumps into database
+Song '5260494' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '5260494'
+Trying to update tags of song '5260494'
+Song '35288210' dumps into database
+Song '362998' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '362998'
+Trying to update tags of song '362998'
+Song '165005' dumps into database
+Song '28191910' dumps into database
+Song '176053' dumps into database
+UNIQUE constraint failed: songs.id
+  Duplicated ID: '176053'
+Trying to update tags of song '176053'
+Song '5269033' dumps into database
+Song '28181131' dumps into database
+Song '28952240' dumps into database
+Song '22840606' dumps into database
+Song '25949866' dumps into database
+Song '5399282' dumps into database
+
+40 new songs added
+12 tags of songs updated
