@@ -12,10 +12,10 @@ import json
 import os
 import re
 import random
-import requests
-import time
-
 from operator import itemgetter
+from time import sleep
+
+import requests
 from bs4 import BeautifulSoup
 from Crypto.Cipher import AES
 
@@ -67,7 +67,7 @@ def getLyricComment(ID, text):
     except:
         print("Failed to scrape lyric of song '{}'".format(ID))
         lyric = None
-    time.sleep(abs(random.gauss(10, 5)))
+    sleep(abs(random.gauss(10, 5)))
     return (lyric, top100comments)
 
 
