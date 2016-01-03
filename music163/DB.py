@@ -11,7 +11,8 @@ from bs4 import BeautifulSoup
 
 import Scrape
 
-def dumpToDB(songs):
+def dumpToDB(songs, conn):
+    cur = conn.cursor()
     count_s = 0
     for s in songs:
         try:
@@ -19,9 +20,9 @@ def dumpToDB(songs):
             cur.execute("""INSERT INTO songs (id, name, artist, album, duration, lyric, comment)
                 VALUES (?, ?, ?, ?, ?, ?, ?)""", s)
             count_s += 1
+            conn.commit()
         except sqlite3.IntegrityError as IntErr:
             print("{err}\n  Duplicated ID: '{ID}'".format(err=IntErr, ID=s[0]))
-        conn.commit()
     print("\n{} new songs added".format(count_s))
 
 
@@ -38,6 +39,7 @@ def main():
         lyric TEXT(3000),
         comment MEDIUMTEXT,
         modified_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
+    cur.close()
 
     listID = ['148858141', '148822545', '148821771', '148822543', 
         '148813956', '148818810']
@@ -49,8 +51,8 @@ def main():
             sys.stderr = f
             url = baseURL + ID
             songs = Scrape.getSongDetail(url)
-            dumpToDB(songs)
-            sleep(abs(random.gauss(8, 5)) % 20)
+            dumpToDB(songs, conn)
+            sleep(abs(random.gauss(6, 2.5)) % 15)
     conn.close()
 
 if __name__ == '__main__':

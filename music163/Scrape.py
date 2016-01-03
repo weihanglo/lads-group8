@@ -50,7 +50,7 @@ def getLyricComment(ID, text):
     url_comments = 'http://music.163.com/weapi/v1/resource/comments/R_SO_4_{}/?&limit=99999&csrf_token='.format(ID)
     url_lyric= 'http://music.163.com/weapi/song/lyric?id={}&lv=-1&kv=-1&tv=-1'.format(ID)
     try:
-        print("Scraping comments of song {}".format(ID))
+        print("Scraping comments of song '{}'".format(ID))
         raw_comments = requests.post(url_comments, data=data, headers=headers).text
         comments = [(comment['content'], comment['likedCount']) for comment in json.loads(raw_comments)['comments']]
         comments.sort(key=itemgetter(1), reverse=True)
@@ -67,7 +67,7 @@ def getLyricComment(ID, text):
     except:
         print("Failed to scrape lyric of song '{}'".format(ID))
         lyric = None
-    sleep(abs(random.gauss(8, 5)) % 20)
+    sleep(abs(random.gauss(6, 2.5)) % 15)
     return (lyric, comments)
 
 
