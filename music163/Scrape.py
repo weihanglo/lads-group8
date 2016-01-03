@@ -54,10 +54,10 @@ def getLyricComment(ID, text):
         raw_comments = requests.post(url_comments, data=data, headers=headers).text
         comments = [(comment['content'], comment['likedCount']) for comment in json.loads(raw_comments)['comments']]
         comments.sort(key=itemgetter(1), reverse=True)
-        top100comments = '<|>'.join([c[0] for c in comments[0:100]])
+        comments = '<|>'.join([c[0] for c in comments])
     except:
         print("Failed to scrape comments of song '{}'".format(ID))
-        top100comments = None
+        comments = None
     try:
         print("Scraping lyric of song '{}'".format(ID))
         raw_lyric = requests.post(url_lyric, data=data, headers=headers).text
@@ -67,8 +67,8 @@ def getLyricComment(ID, text):
     except:
         print("Failed to scrape lyric of song '{}'".format(ID))
         lyric = None
-    sleep(abs(random.gauss(10, 5)))
-    return (lyric, top100comments)
+    sleep(abs(random.gauss(8, 5)) % 20)
+    return (lyric, comments)
 
 
 def getSongDetail(url):
@@ -78,14 +78,13 @@ def getSongDetail(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     songlist = json.loads(soup.select_one('textarea').text)
-    tags = [s.string for s in soup.select('a.u-tag > i')]
     songDetails = [(
         s['id'], 
         s['name'], 
         s['artists'][0]['name'], 
         s['album']['name'], 
         s['duration']) + getLyricComment(s['id'], text) for s in songlist]
-    return {'songs': songDetails, 'tags': tags}
+    return songDetails
 
 
 text = {
