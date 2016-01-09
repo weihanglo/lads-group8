@@ -1,27 +1,32 @@
 library(RSQLite)
+library(jiebaR)
 library(data.table)
 
-emoji <- sub("(.*)", "[\\1]", scan("emoji.txt", what = 'char'))
-
-conn <- dbConnect(dbDriver("SQLite"), "music163.db")
+# Read files
+conn <- dbConnect(dbDriver("SQLite"), "music163-2.db")
 songs <- dbReadTable(conn, "songs")
-tags <- dbReadTable(conn, "tags")
 dbDisconnect(conn = conn)
-setDT(songs, key = "id")
-setDT(tags, key = "song_id")
+rank <- fread("out.txt", col.names = c("name", "id", "year", "rank"))
+#setDT(songs, key = "id")
+songs <- merge(songs, rank, by = "id")
 
-CHid <- tags[tags$tag == "华语", song_id]
-emotion <- tags[tags$tag %in% c("快乐", "伤感")]
-CHsongs <- merge(songs[id %in% CHid], emotion, by.x = "id", by.y = "song_id")
-CHsongs$id[which(duplicated(CHsongs$id))]
+POS <- readLines("sentiment_dict/POS.txt")
+NEG <- readLines("sentiment_dict/NEG.txt")
+emoji <- sub("(.*)", "[\\2]", scan("emoji.txt", what = 'char'))
 
-tag_cmmtLen <- CHsongs[, .(lapply(comment, function(c) nchar(strsplit(c, "<|>", fixed = TRUE)[[1]]))), by = tag]
+# Positive Negitive
+SEG <- worker()
+songs$cmmt_seg <- lapply(songs$comment, function(x) SEG <= x)
+songs$POS_score <- sapply(songs$cmmt_seg, function(x) sum(x %in% POS))
+songs$NEG_score <- sapply(songs$cmmt_seg, function(x) sum(x %in% NEG))
+songs$lyric_seg <- lapply(songs$lyric, function(x) SEG <= x)
+songs$POS_lyric <- sapply(songs$lyric_seg, function(x) sum(x %in% POS))
+songs$NEG_lyric <- sapply(songs$lyric_seg, function(x) sum(x %in% NEG))
 
-# Document Emoji Matrix
-DEM <- sapply(emoji, function(e) {
-    print(e)
-    sapply(gregexpr(e, CHsongs$comment), function(c) sum(ifelse(c != -1, 1, 0)))
-})
-as.data.table(DEM)[, lapply(.SD, sum), by = .(tag = CHsongs$tag)]
 
-i <- sample(1:nrow(CHsongs), 1); strsplit(CHsongs$comment[i], "<|>", fixed = TRUE); CHsongs[i, .(tag, name, id, artist)]
+# Number of comment
+songs$cmmt_number <- sapply(songs$comment, function(x) length(unlist(strsplit(x, "<|>", fixed = TRUE))), USE.NAMES = FALSE)
+
+summary(lm(rank ~ artist + NEG_lyric + POS_score + NEG_lyric + POS_score, data = songs))
+
+songs$rank50 <- ifelse(songs$rank <= 50, 1, 0)

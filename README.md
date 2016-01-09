@@ -1,2 +1,8 @@
-# lads-group8
-[Google Drive](https://goo.gl/Hk4X68)
+# Linguistic Analysis and Data Science Course @ NTU
+## Group 8's Repository
+
+This is repository of group 8 in LADS course.  
+[Here][final-gitbook] is our final project: **《Hit FM排行榜預測》**
+[final-gitbook]: 
+
+**Published on Jan 2016**
