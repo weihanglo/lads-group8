@@ -1,4 +1,4 @@
-# Linguistic Analysis and Data Science Course @ NTU
+# Linguistic Analysis and Data Science @ NTU
 ## Group 8's Repository
 
 This is repository of group 8 in LADS course.  
