@@ -3,6 +3,6 @@
 
 This is repository of group 8 in LADS course.  
 
-Here is our final project: [**《Hit FM排行榜預測》**](music163/analysis.md)
+Here is our final project: [**《Hit FM排行榜預測》**](music163/README.md)
 
 **Published on Jan 2016**
