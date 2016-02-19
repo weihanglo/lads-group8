@@ -1,0 +1,140 @@
+---
+title: "LADS Midterm Hackthon"
+author: "Group 8"
+output:
+  html_document:
+    theme: null
+    highlight: "pygments"
+    css: ~/wd/github-pandoc.css
+---
+
+# Pre-processing
+### 1. Load packages and stopword dictionaries
+```{r}
+library(data.table)
+library(rpart)
+library(randomForest)
+library(jiebaR)
+stopword <- list.files("stopword", full.names = TRUE)
+stopword <- unlist(sapply(stopword, scan, what = 'char', sep = "\n"), use.names = FALSE)
+```
+### 2. Remove stopwords
+```{r}
+seg <- worker()
+train_raw <- fread("train.csv", sep = ",")
+train_raw$news <- iconv(train_raw$news, from = 'BIG5', to = "UTF-8")
+train_raw$news <- gsub("[[:punct:]]", " ", train_raw$news)
+train_raw$news <- sapply(train_raw$news, function(news) {
+    txt <- seg <= news
+    txt[!txt %in% stopword]
+})
+train_raw$category <- as.factor(train_raw$category)
+```
+
+# Choose variable
+### 1. Split our dataset for training usage and testing usage
+```{r}
+train <- train_raw[1:8000, ]
+test <- train_raw[8001:10000, ]
+```
+
+### 2. For each category, find top 5000 words in word-frequency table
+```{r}
+words <- tapply(train$news, train$category, function(x) unlist(x))
+word_freq <- lapply(words, function(x) names(tail(sort(table(x)), 5000)))
+```
+
+### 3. Eliminate identical words from word list of each category
+```{r}
+word_diff <- data.frame(category = 1:10, diff = NA)
+for (i in 1:10) {
+    word_diff$diff[i] <- list(word_freq[[i]][!word_freq[[i]] %in% unlist(word_freq[-i])])
+}
+word_diff$diff <- lapply(word_diff$diff, tail, n = 500)
+```
+
+### 4. For each observation, count the occurrence of words matching word list of each category
+```{r}
+train_category <- lapply(train$news, function(news) {
+    sapply(word_diff$diff, function(word) {
+        sum(unique(news) %in% word)
+    })
+})
+
+test_category <- lapply(test$news, function(news) {
+    sapply(word_diff$diff, function(word) {
+        sum(unique(news) %in% word)
+    })
+})
+```
+
+### 5. Clean up training data and testing data
+```{r}
+train <- cbind(train, as.matrix(t(as.data.frame(train_category))))
+names(train)[4:13] <- paste0('X', 1:10)
+train <- train[, c(2, 4:13), with = FALSE]
+
+test <- cbind(test, as.matrix(t(as.data.frame(test_category))))
+names(test)[4:13] <- paste0('X', 1:10)
+test <- test[, c(2, 4:13), with = FALSE]
+```
+
+# Create model and Maching Learning
+### * Decision tree algorithm
+```{r}
+
+tree <- rpart(category ~ ., data = train)
+result <- predict(tree, test, type = 'class')
+(cross_table <- table(result, test$category))
+sum(diag(cross_table))
+```
+```{r}
+### Accuracy of DTree algorithm method
+sum(diag(cross_table)) / 2000
+```
+
+### * Random forest algorithm
+```{r}
+forest <- randomForest(category ~ ., data = train)
+result <- predict(forest, test, type = 'class')
+(cross_table <- table(result, test$category))
+sum(diag(cross_table))
+```
+
+### Accuracy of RF algorithm method
+```{r}
+sum(diag(cross_table)) / 2000
+```
+
+
+# Test our classification model
+```{r}
+TEST <- fread("test.csv")
+
+TEST$news <- gsub("[[:punct:]]", " ", TEST$news)
+TEST$news <- sapply(TEST$news, function(news) {
+    txt <- seg <= news
+    txt[!txt %in% stopword]
+})
+
+TEST_category <- lapply(TEST$news, function(news) {
+    sapply(word_diff$diff, function(word) {
+        sum(unique(news) %in% word)
+    })
+})
+
+TEST <- cbind(TEST, as.matrix(t(as.data.frame(TEST_category))))
+TEST <- TEST[, c(3:12), with = FALSE]
+names(TEST)<- paste0('X', 1:10)
+```
+
+# Here is our final result!
+```{r}
+RESULT <- predict(tree, TEST, type = 'class')
+output <- data.table(id = 10001:11000, cagegory = RESULT)
+write.table(output, file = "output_DTree.csv", quote = FALSE, sep = ",", row.names = FALSE)
+
+RESULT <- predict(forest, TEST, type = 'class')
+output <- data.table(id = 10001:11000, cagegory = RESULT)
+write.table(output, file = "output_RF.csv", quote = FALSE, sep = ",", row.names = FALSE)
+```
